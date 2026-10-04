@@ -82,3 +82,26 @@ small {
     padding: .15rem .7rem; 
     margin: 0 .3rem .3rem 0; 
     font-size: .9rem; }
+
+.group { 
+    margin-top: .7rem; }
+
+.group b { 
+    display: block; 
+    font-size: .85rem; 
+    color: #6a7480; 
+    margin-bottom: .2rem; }
+
+.chip { 
+    display: inline-block; 
+    background: #e1ebf2; 
+    border-radius: 99px; 
+    padding: .1rem .7rem;
+    margin: 0 .3rem .3rem 0; 
+    font-size: .88rem; 
+    font-family: monospace; 
+    word-break: break-all; }
+
+.none { 
+    color: #8b939c; 
+    font-size: .85rem; }

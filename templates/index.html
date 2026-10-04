@@ -3,31 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Image to text</title>
+  <title>Image to clean text</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <main>
-    <h1>Image to text</h1>
-    <p class="sub">Upload an image to get editable text and the key details found in it.</p>
+    <h1>Image to clean text</h1>
+    <p class="sub">Upload screenshots. Get clean, labeled text you can download as a dataset.</p>
 
     <div id="dropzone" tabindex="0">
-      <p id="dropText">Drop an image here, or click to browse</p>
-      <img id="preview" alt="Selected image" hidden>
-      <input type="file" id="fileInput" accept="image/*" hidden>
+      <p id="dropText">Drop images here, or click to browse (up to 20)</p>
+      <input type="file" id="fileInput" accept="image/*" multiple hidden>
     </div>
+    <div id="fileList"></div>
 
     <button id="extractBtn" disabled>Extract text</button>
     <span id="status"></span>
 
     <section id="results" hidden>
-      <h2>Extracted text <small id="meta"></small></h2>
-      <textarea id="output" rows="10"></textarea>
-      <button id="copyBtn">Copy text</button>
-      <button id="downloadBtn">Download .txt</button>
-
-      <h2>Details found</h2>
-      <div id="found"></div>
+      <div class="bar">
+        <h2>Results <small id="summary"></small></h2>
+        <div>
+          <button id="csvBtn">Download CSV</button>
+          <button id="jsonBtn">Download JSON</button>
+        </div>
+      </div>
+      <div id="cards"></div>
+      <div id="errors"></div>
     </section>
   </main>
   <script src="/static/script.js"></script>
