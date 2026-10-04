@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image to text</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <h1>Image to text</h1>
+    <p class="sub">Upload an image to get editable text and the key details found in it.</p>
+
+    <div id="dropzone" tabindex="0">
+      <p id="dropText">Drop an image here, or click to browse</p>
+      <img id="preview" alt="Selected image" hidden>
+      <input type="file" id="fileInput" accept="image/*" hidden>
+    </div>
+
+    <button id="extractBtn" disabled>Extract text</button>
+    <span id="status"></span>
+
+    <section id="results" hidden>
+      <h2>Extracted text <small id="meta"></small></h2>
+      <textarea id="output" rows="10"></textarea>
+      <button id="copyBtn">Copy text</button>
+      <button id="downloadBtn">Download .txt</button>
+
+      <h2>Details found</h2>
+      <div id="found"></div>
+    </section>
+  </main>
+  <script src="/static/script.js"></script>
+</body>
+</html>
