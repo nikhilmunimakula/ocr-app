@@ -9,27 +9,20 @@
 <body>
   <main>
     <h1>Image to clean text</h1>
-    <p class="sub">Upload screenshots. Get clean, labeled text you can download as a dataset.</p>
+    <p class="sub">Upload one image. Get clean text, plus the links and junk symbols found in it.</p>
 
     <div id="dropzone" tabindex="0">
-      <p id="dropText">Drop images here, or click to browse (up to 20)</p>
-      <input type="file" id="fileInput" accept="image/*" multiple hidden>
+      <p id="dropText">Drop an image here, or click to browse</p>
+      <img id="preview" alt="Selected image" hidden
+           style="max-width:100%; max-height:240px; margin-top:1rem; border-radius:6px;">
+      <input type="file" id="fileInput" accept="image/*" hidden>
     </div>
-    <div id="fileList"></div>
 
     <button id="extractBtn" disabled>Extract text</button>
     <span id="status"></span>
 
     <section id="results" hidden>
-      <div class="bar">
-        <h2>Results <small id="summary"></small></h2>
-        <div>
-          <button id="csvBtn">Download CSV</button>
-          <button id="jsonBtn">Download JSON</button>
-        </div>
-      </div>
-      <div id="cards"></div>
-      <div id="errors"></div>
+      <div id="card"></div>
     </section>
   </main>
   <script src="/static/script.js"></script>

@@ -9,12 +9,11 @@ from ocr.filtering import filter_words
 from ocr.preprocess import preprocess
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 40 * 1024 * 1024    # whole request, all images
+app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024     # reject files over 8 MB
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 ALLOWED = {"png", "jpg", "jpeg", "bmp", "tiff", "webp"}
-MAX_FILES = 20
 MIN_CONF = 60
 
 
@@ -33,7 +32,6 @@ def process_one(file):
         clean = clean_for_dataset(filter_words(words, MIN_CONF))
         return {
             "file": file.filename,
-            "confidence": confidence,
             "word_count": len(clean.split()),
             "status": "ok" if confidence >= 60 and clean else "needs_review",
             "urls": extract_urls(raw_text),            # searched in the full OCR text
@@ -53,23 +51,15 @@ def home():
 
 @app.route("/upload", methods=["POST"])
 def upload():
-    files = [f for f in request.files.getlist("images") if f.filename]
-    if not files:
-        return jsonify(error="No images received."), 400
-    if len(files) > MAX_FILES:
-        return jsonify(error=f"Upload at most {MAX_FILES} images at a time."), 400
-
-    results, errors = [], []
-    for file in files:                                 # loop over every image
-        if not allowed_file(file.filename):
-            errors.append({"file": file.filename, "error": "Not a supported image type."})
-            continue
-        try:
-            results.append(process_one(file))
-        except Exception as e:                         # one bad file must not stop the rest
-            errors.append({"file": file.filename, "error": str(e)})
-
-    return jsonify(results=results, errors=errors)
+    file = request.files.get("image")
+    if file is None or file.filename == "":
+        return jsonify(error="No image received."), 400
+    if not allowed_file(file.filename):
+        return jsonify(error="Use a PNG, JPG, BMP, TIFF or WEBP image."), 400
+    try:
+        return jsonify(process_one(file))
+    except Exception as e:
+        return jsonify(error=f"Processing failed: {e}"), 500
 
 
 if __name__ == "__main__":
